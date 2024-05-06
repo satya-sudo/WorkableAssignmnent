@@ -1,0 +1,79 @@
+body {
+  font-family: sans-serif; 
+}
+
+.company {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    color: #8b8b8b;
+}
+
+.role {
+    font-size: 16px;
+    line-height: 1.5;
+}
+.location {
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+.salary {
+    margin: 0px 0px 10px 0px;
+    font-weight: 400;
+    color: rgb(77, 89, 106);
+    line-height: 1.43;
+}
+.about_header {
+    margin: 0px;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+}
+.about_text {
+    margin: 0px;
+    font-weight: 400;
+}
+.footer_experience {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    color: #8b8b8b;
+}
+.footer_experience_value {
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+.apply_btn {
+    width: 100%;
+    background-color: rgb(85, 239, 196) !important;
+    color: rgb(0, 0, 0) !important;
+    font-weight: 500 !important;
+    padding: 8px 18px;
+    text-transform: capitalize !important;
+    box-shadow: none !important;
+}
+
+.card {
+    border-radius: 20px !important;
+    padding: 5px !important;
+    box-shadow: #8b8b8b;
+}
+
+.show-more-btn {
+    border: none;
+    background: none;
+    padding: 10px;
+    margin: 0;
+    color: #4943da;
+    cursor: pointer;
+}
+
+.job_details {
+    font-weight: 200;
+    margin-top: 0px;
+}

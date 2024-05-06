@@ -1,7 +1,9 @@
 import React from 'react';
-import { Card, Stack, Button } from '@mui/material'; 
+import { Card, Stack, Button, Typography } from '@mui/material'; 
 import LazyImage from './imageHolder'; 
 import TruncateText from './textTruncate';
+
+import './jobCards.css';
 
 const JobsCard = ({
   companyName,
@@ -15,6 +17,7 @@ const JobsCard = ({
   logoUrl,
   jdLink,
 }) => {
+  
   const salaryRange = minJdSalary ? `${minJdSalary} - ${maxJdSalary} LPA` : `${maxJdSalary} LPA`;
 
   const getCurrencySymbol = (salaryCurrencyCode) => {
@@ -35,30 +38,32 @@ const JobsCard = ({
   };
 
   return (
-    <Card>
+    <Card className='card'>
       <Stack direction="row" margin={2}>
         <LazyImage src={logoUrl} alt="Company Logo" />
         <Stack marginLeft={2}>
-          {companyName && <span>{companyName}</span>}
-          {jobRole && <span>{jobRole}</span>}
-          {location && <span>{location}</span>}
+          {companyName && <span className='company'>{companyName}</span>}
+          {jobRole && <span className="role" >{jobRole}</span>}
+          {location && <span className="location">{location}</span>}
         </Stack>
       </Stack>
-      <div>Estimated Salary: {`${getCurrencySymbol(salaryCurrencyCode)} ${salaryRange}`}</div>
+      <Stack margin={2}>
+      <p className='salary'>Estimated Salary: {`${getCurrencySymbol(salaryCurrencyCode)} ${salaryRange}`}</p>
       <Stack>
-        <div>About Company:</div>
-        <div>About us</div>
+        <p className='about_header'>About Company:</p>
+        <p className='about_header'><strong>About us</strong></p>
         {text && <TruncateText text={text} />}
         {minExp && (
           <div>
-            <div>Minimum Experience</div>
-            <div>{`${minExp} YEARS`}</div>
+            <h3 className='footer_experience'>Minimum Experience</h3>
+            <h2 className='footer_experience_value'>{`${minExp} YEARS`}</h2>
           </div>
         )}
       </Stack>
-      <Button onClick={handleButtonClick} variant="contained" color="primary">
+      <Button onClick={handleButtonClick} variant="contained" className='apply_btn'>
         Easy Apply
-      </Button>
+      </Button >
+      </Stack>
     </Card>
   );
 };

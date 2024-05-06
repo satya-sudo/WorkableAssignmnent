@@ -3,8 +3,12 @@ import Container from '@mui/material/Container';
 import { fetchJobsList } from './helpers/resources';
 import FilterDropdownList from './components/filterDropdownList';
 import JobsCard from './components/jobCards';
+import GoToTopButton from './components/GotoTopBtn';
 import { EXPERIENCE, NO_OF_EMPOYEES, REMOTE, ROLES, SALARY } from './constants';
 import Stack from '@mui/material/Stack';
+import { Grid } from '@mui/material';
+import { debounce } from 'lodash';
+
 
 function AppContainer() {
   const [jobsList, setJobsList] = useState([]);
@@ -15,15 +19,16 @@ function AppContainer() {
   const [salaryFilter, setSalaryFilter] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [filterJobList, setFilterJobList] = useState([]);
   const pageRef = useRef(1);
-  const limit = 10; 
+  const limit = 30; 
 
   const getJobList = async (page) => {
     try {
       const offset = (page - 1) * limit;
-      const res = await fetchJobsList({limit, offset});
+      const res = await fetchJobsList({ limit, offset });
       setJobsList((prevJobsList) => [...prevJobsList, ...res?.jdList]);
-      setHasMore(res?.jdList.length === limit);
+      setHasMore(offset + limit < res.totalCount);
     } catch (err) {
       console.log(err);
     } finally {
@@ -33,7 +38,7 @@ function AppContainer() {
 
   const handleScroll = () => {
     if (
-      window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight &&
+      window.innerHeight + document.documentElement.scrollTop >= document.documentElement.scrollHeight - 100 &&
       !isLoading &&
       hasMore
     ) {
@@ -42,27 +47,47 @@ function AppContainer() {
       getJobList(pageRef.current);
     }
   };
+  const debouncedHandleScroll = debounce(handleScroll, 300);
 
   useEffect(() => {
     getJobList(pageRef.current);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []); // Fetch initial data and add scroll event listener
+    window.addEventListener('scroll', debouncedHandleScroll);
+    return () => window.removeEventListener('scroll', debouncedHandleScroll);
+  }, []);
 
+  useEffect(() => {
+    let filterJobLists = jobsList
+
+    if (experienceFilter?.length) {
+      filterJobLists =  jobsList.filter(ele => ele.minExp <= parseInt(experienceFilter))
+    }
+    // no data in the api response for no of employee, and remote
+
+    if (salaryFilter?.length) {
+      filterJobLists =  filterJobLists.filter(ele => ele.minJdSalary >= parseInt(salaryFilter.replace("L", "")))
+    }
+
+    if (rolesFilter.length) {
+      filterJobLists =  filterJobLists.filter(ele =>  rolesFilter.includes(ele.jobRole))
+    }
+    setFilterJobList(filterJobLists);
+    
+  }, [rolesFilter,noOfEmpFilter,experienceFilter, remoteFilter, salaryFilter, jobsList]);
   const renderJobs = () => {
-    return jobsList.map((ele) => (
-      <JobsCard
-        key={ele.jdUid}
-        logoUrl={ele.logoUrl}
-        companyName={ele.companyName}
-        location={ele.location}
-        jobRole={ele.jobRole}
-        maxJdSalary={ele.maxJdSalary}
-        salaryCurrencyCode={ele.salaryCurrencyCode}
-        text={ele.jobDetailsFromCompany}
-        minExp={ele.minExp}
-        jdLink={ele.jdLink}
-      />
+    return filterJobList.map((ele) => (
+      <Grid item xs={12} sm={6} md={4} lg={4} xl={4} key={ele.jdUid}>
+        <JobsCard
+          logoUrl={ele.logoUrl}
+          companyName={ele.companyName}
+          location={ele.location}
+          jobRole={ele.jobRole}
+          maxJdSalary={ele.maxJdSalary}
+          salaryCurrencyCode={ele.salaryCurrencyCode}
+          text={ele.jobDetailsFromCompany}
+          minExp={ele.minExp}
+          jdLink={ele.jdLink}
+        />
+      </Grid>
     ));
   };
 
@@ -75,10 +100,11 @@ function AppContainer() {
         <FilterDropdownList label={'Remote'} options={REMOTE} value={remoteFilter} setValue={setRemoteFilter} multiple={true} />
         <FilterDropdownList label={'Min Base Pay'} options={SALARY} value={salaryFilter} setValue={setSalaryFilter} />
       </Stack>
-      <Stack direction="row" flexWrap="wrap" alignItems="center">
+      <Grid container spacing={3}>
         {renderJobs()}
-        {isLoading && <p>Loading...</p>}
-      </Stack>
+      </Grid>
+      {isLoading && <p>Loading...</p>}
+      <GoToTopButton />
     </Container>
   );
 }

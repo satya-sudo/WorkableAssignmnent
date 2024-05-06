@@ -1,7 +1,9 @@
 export const ROLES = [
-    'Backend',
-    'Frontend',
-    "FullStack",
+    'backend',
+    'frontend',
+    "fullStack",
+    "ios",
+    "tech lead"
 ]
 
 export const NO_OF_EMPOYEES = [

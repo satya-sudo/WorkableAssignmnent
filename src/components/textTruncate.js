@@ -1,3 +1,4 @@
+import { Stack } from '@mui/material';
 import React, { useState } from 'react';
 
 const TruncateText = ({ text }) => {
@@ -10,14 +11,14 @@ const TruncateText = ({ text }) => {
   const truncatedText = isExpanded ? text : `${text.slice(0, 150)}...`;
 
   return (
-    <div>
-      <p>{truncatedText}</p>
+    <Stack>
+      <p className='job_details'>{truncatedText}</p>
       {!isExpanded && (
-        <button onClick={toggleExpansion} style={{ opacity: 0.5 }}>
+        <button onClick={toggleExpansion}  className='show-more-btn'>
           Show More
         </button>
       )}
-    </div>
+    </Stack>
   );
 };
 
