@@ -16,7 +16,7 @@ function AppContainer() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const pageRef = useRef(1);
-  const limit = 10; // Set your pagination limit here
+  const limit = 10; 
 
   const getJobList = async (page) => {
     try {
