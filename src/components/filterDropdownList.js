@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { Chip } from '@mui/material';
+
+import { Chip, TextField, Autocomplete } from '@mui/material';
 
 
 const FilterDropdownList = ({label, options, value, setValue, multiple }) => {

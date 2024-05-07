@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Stack, Button, Typography } from '@mui/material'; 
+import { Card, Stack, Button } from '@mui/material'; 
+
+import { CURRENCY_SYMBOLS } from '../constants';
 import LazyImage from './imageHolder'; 
 import TruncateText from './textTruncate';
 
@@ -21,19 +23,11 @@ const JobsCard = ({
   const salaryRange = minJdSalary ? `${minJdSalary} - ${maxJdSalary} LPA` : `${maxJdSalary} LPA`;
 
   const getCurrencySymbol = (salaryCurrencyCode) => {
-    const currencySymbols = {
-      USD: '$',
-      EUR: '€',
-      GBP: '£',
-      JPY: '¥',
-      AUD: 'A$',
-      CAD: 'C$',
-      INR: '₹',
-    };
-    return currencySymbols[salaryCurrencyCode] || '';
+    return CURRENCY_SYMBOLS[salaryCurrencyCode] || '';
   };
 
   const handleButtonClick = () => {
+    // redirect to jblink
     window.open(jdLink, '_blank');
   };
 
@@ -62,7 +56,7 @@ const JobsCard = ({
       </Stack>
       <Button onClick={handleButtonClick} variant="contained" className='apply_btn'>
         Easy Apply
-      </Button >
+      </Button>
       </Stack>
     </Card>
   );

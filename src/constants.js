@@ -45,3 +45,13 @@ export const SALARY = [
     "90L",
     "100L"
 ]
+
+export const CURRENCY_SYMBOLS = {
+    USD: '$',
+    EUR: '€',
+    GBP: '£',
+    JPY: '¥',
+    AUD: 'A$',
+    CAD: 'C$',
+    INR: '₹',
+  };
