@@ -104,6 +104,7 @@ function AppContainer() {
           companyName={ele.companyName}
           location={ele.location}
           jobRole={ele.jobRole}
+          minJdSalary={ele.minJdSalary}
           maxJdSalary={ele.maxJdSalary}
           salaryCurrencyCode={ele.salaryCurrencyCode}
           text={ele.jobDetailsFromCompany}
